@@ -1,0 +1,24 @@
+﻿<Application x:Class="Blender_stuff.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Blender_stuff"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <LinearGradientBrush x:Key="VerticalScrollBarBackground" EndPoint="1,0" StartPoint="0,0">
+                <GradientStop Color="Red" Offset="0"/>
+                <GradientStop Color="#EDEDED" Offset="0.20"/>
+                <GradientStop Color="#EDEDED" Offset="0.80"/>
+                <GradientStop Color="#E3E3E3" Offset="1"/>
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="ScrollBarDisabledBackground" Color="#F4F4F4"/>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

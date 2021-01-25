@@ -1,0 +1,176 @@
+﻿<Window x:Class="Blender_stuff.MainWindow"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Blender_stuff"
+        mc:Ignorable="d"
+        Title="MainWindow"  Height="512" Width="400" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"  Background="#FFF70B0B" BorderBrush="#FFCD3434">
+    <Window.Resources>
+        <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Grid x:Name="Grid">
+                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent"/>
+                            <Border x:Name="Rectangle1" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Background="{TemplateBinding Background}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Horizontal">
+                                <Setter TargetName="Rectangle1" Property="Width" Value="Auto"/>
+                                <Setter TargetName="Rectangle1" Property="Height" Value="7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--ScrollBars-->
+        <Style x:Key="ScrollBarStyle" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Foreground" Value="#8C8C8C"/>
+            <Setter Property="Background" Value="#FFFDA154"/>
+            <Setter Property="Width" Value="15"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="GridRoot" Width="10" Background="{TemplateBinding Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.00001*"/>
+                            </Grid.RowDefinitions>
+
+                            <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Background="#FFFF5625" Style="{StaticResource ScrollThumbs}"/>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false"/>
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Width" Value="Auto"/>
+                                <Setter Property="Height" Value="8"/>
+                                <Setter TargetName="Thumb" Property="Tag" Value="Horizontal"/>
+                                <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand"/>
+                                <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ScrollViewer -->
+        <Style x:Key="ScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="16"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <ScrollContentPresenter Grid.ColumnSpan="3" />
+                            <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="2" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Style="{DynamicResource ScrollBarStyle}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#FFFF8118" MouseLeftButtonDown="Drag" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock HorizontalAlignment="Center" FontSize="20" Height="18" FontWeight="Bold" Foreground="White">
+                    Blender Launcher
+            </TextBlock>
+            <StackPanel HorizontalAlignment="Right" x:Name="top_properties" Background="#FFBD0B0B" Width="102" Grid.ColumnSpan="2">
+
+                <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth5"   Background="#FF1B1B1B" BorderBrush="White" Foreground="#DDFFFFFF">
+
+                    <Border Padding="2" Background="#FFFF5625">
+                        <StackPanel  HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button x:Name="reset" Width="45" Height="35" Margin="2 0 2 0" Background="#FFFF5625" BorderBrush="White" Foreground="#DDFFFFFF" Click="Minimize_Click" >
+                                <materialDesign:PackIcon Kind="WindowMinimize"/>
+                            </Button>
+                            <Button x:Name="exit" Width="45" Height="35" Margin="2 0 2 0" Background="#FFFF5625" BorderBrush="White" Foreground="#DDFFFFFF" Click="Exit_Click" >
+                                <materialDesign:PackIcon Kind="WindowClose"/>
+                            </Button>
+                        </StackPanel>
+
+                    </Border>
+                </materialDesign:ColorZone>
+            </StackPanel>
+
+        </Grid>
+        <ScrollViewer Style="{StaticResource ScrollViewerStyle}" Grid.Row="1" >
+            <StackPanel x:Name="MainPanel" Orientation="Vertical">
+                <StackPanel x:Name="addPanel">
+                    <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth5"   Background="White" BorderBrush="White" Foreground="#DDFFFFFF">
+
+                        <Button  Height="50" x:Name="Add" materialDesign:ButtonAssist.CornerRadius="5 25 5 25" Margin="10 7 25 7" Padding="0" Background="#FFFF5625" BorderBrush="#FFD87A2B" Foreground="#DDFFFFFF" Click="Add_Version" >
+                            + Add New Version
+                        </Button>
+                    </materialDesign:ColorZone>
+                    <Line Width="400" Height="2" Fill="#FFFF8118" Stroke="#FFFF8118" X1="0" X2="400" OpacityMask="Red" StrokeThickness="8"/>
+                </StackPanel>
+                <!--Main part-->
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Versions -->
+                    <StackPanel  x:Name="VersionPanel" Grid.Column="0">
+                        <Button x:Name="VersionBTN"  Height="0" IsEnabled="False" Margin="10 5 5 5" materialDesign:ButtonAssist.CornerRadius="5 25 5 25"  ></Button>
+                    </StackPanel>
+                    <!-- Remove Buttons -->
+                    <StackPanel Margin="0 0 15 0"  x:Name="DeletePanel" Grid.Column="1">
+                        <Button x:Name="deleteBTN" Height="0" IsEnabled="False"  Margin="5" materialDesign:ButtonAssist.CornerRadius="5 25 5 25" Background="#FFF3212B" >
+                            <materialDesign:PackIcon Width="25" Height="25" Kind="Delete"/>
+                        </Button>
+                    </StackPanel>
+                    <GridSplitter HorizontalAlignment="Left" Height="10" Margin="275,6,0,-6" VerticalAlignment="Top" Width="10"/>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+</Window>
